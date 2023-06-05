@@ -1,0 +1,14 @@
+{
+  "name": "Cookie Clearer",
+  "manifest_version": 3,
+  "version": "1.0",
+  "permissions": ["cookies",  "storage", "scripting",  "activeTab", "background", "tabs", "webRequest", "nativeMessaging"],
+  "host_permissions": ["<all_urls>"],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  }
+}

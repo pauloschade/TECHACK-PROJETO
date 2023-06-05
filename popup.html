@@ -1,0 +1,169 @@
+<!-- <!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="popup.css"></link>
+    <script src="popup.js" type="module"></script>
+  </head>
+  <body >
+    <div id="cookies" class="sep">
+      <form id="display-cookie">
+        <button id="go">Show Cookies</button>
+      </form>
+      <form id="delete-cookie">
+        <button id="go">Clear Cookies</button>
+      </form>
+      <span id="message-cookie" class="message" hidden></span>
+    </div>
+    <div id="local-storage" class="sep">
+      <form id="display-storage">
+        <button id="go">Show Storage</button>
+      </form>
+      <form id="delete-storage">
+        <button id="go">Clear Storage</button>
+      </form>
+      <span id="message-storage" class="message" hidden></span>
+    </div>
+  </body>
+</html> -->
+
+<!-- <!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+  </head>
+  <body >
+    <nav>
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Home</button>
+        <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</button>
+        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</button>
+        <button class="nav-link" id="nav-disabled-tab" data-bs-toggle="tab" data-bs-target="#nav-disabled" type="button" role="tab" aria-controls="nav-disabled" aria-selected="false" disabled>Disabled</button>
+      </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+      <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">...</div>
+      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">...</div>
+      <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">...</div>
+      <div class="tab-pane fade" id="nav-disabled" role="tabpanel" aria-labelledby="nav-disabled-tab" tabindex="0">...</div>
+    </div>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script> -->
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+  </body>
+</html> -->
+
+<!doctype html>
+<html>
+	<head>
+	  <meta charset="utf-8">
+		<meta name="description" content="A basic template for a Chrome Extension using Twitter Bootstrap 3">
+		<meta name="author" content="Elliot Hesp">
+		
+		<title>test</title>
+		
+		<!-- Scripts -->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		
+		<!-- Cascading Style Sheets -->
+		<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">	
+
+    <link rel="stylesheet" href="popup.css"></link>
+    <script src="popup.js" type="module"></script>
+	</head>
+	
+	<body>
+	
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Brand</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+						<ul id="dm" class="dropdown-menu">
+							<li>
+                <a href="#">cookies</a>
+							</li>
+							<li>
+                <a href="#">storage</a>
+							</li>
+							<li>
+								<a href="#">third-party</a>
+							</li>
+              <li>
+								<a href="#">cross-site</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</nav>
+		
+		<section class="center">
+
+        <div hidden id="cookies" class="sep">
+          <div  class="flex-column-mw">
+            <!-- <form id="display-cookie">
+              <button id="go">Show Cookies</button>
+            </form> -->
+            <div id="cookie-list-container" class="flex-column-mw">
+              <div id="cookie-list-container-inner" class="flex-row-mw">
+                <div id="cookie-list-party" class="list flex-column">
+                  <span id="first-party-cookie" class="message" hidden></span>
+                  <span id="third-party-cookie" class="message" hidden></span>
+                </div>
+                <div id="cookie-list-type" class="list flex-column">
+                  <span id="session-cookies" class="message" hidden></span>
+                  <span id="persistent-cookies" class="message" hidden></span>
+                </div>
+              </div>
+              <span id="total-cookies" class="message" hidden></span>
+            </div>
+            <form id="delete-cookie">
+              <button class="sub-btn" id="go">Clear Cookies</button>
+            </form>
+            <form id="display-cookie">
+              <button class="sub-btn" id="go">Show Cookies</button>
+            </form>
+          </div>
+        </div>
+        <div id="storage" class="sep">
+          <span id="message-storage-local" class="message" hidden></span>
+          <span id="message-storage-session" class="message" hidden></span>
+          <form id="delete-storage">
+            <button class="sub-btn" id="go">Clear Storage</button>
+          </form>
+          <form id="display-storage">
+            <button class="sub-btn" id="go">Show Storage</button>
+          </form>
+          <!-- <form id="display-storage">
+            <button class="sub-btn" id="go">Show Storage</button>
+          </form> -->
+        </div>
+         <div id="third-party" class="sep">
+          <form id="display-third-party">
+            <button class="sub-btn" id="go">Show connections</button>
+          </form>
+          <span id="message-third-party" class="message" hidden></span>
+        </div>
+        <div id="cross-site" class="sep">
+          <form id="display-cross-site">
+            <button class="sub-btn" id="go">Show Cross Site Cookies</button>
+          </form>
+          <span id="message-cross-site" class="message" hidden></span>
+        </div>
+
+        <div id="score" class="sep">
+          <div  class="flex-column-mw">
+            <div id="rating-txt" class="message">web site rating:</div>
+            <div id="rating" class="message">0</div>
+            <span id="message-score" class="message"></span>
+          </div>
+      </div>
+		</section>
+		
+	</body>
+</html>
+

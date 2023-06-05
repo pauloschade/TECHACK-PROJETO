@@ -1,5 +1,5 @@
 {
-  "name": "Cookie Clearer",
+  "name": "Privaguard",
   "manifest_version": 3,
   "version": "1.0",
   "permissions": ["cookies",  "storage", "scripting",  "activeTab", "background", "tabs", "webRequest", "nativeMessaging"],

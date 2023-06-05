@@ -3,7 +3,7 @@
 // import { values } from "./src/global/GlobalValues.js";
 import {cookiesHandler} from "./src/cookies/Cookies.js";
 import { storageHandler } from "./src/storage/Storage.js";
-import { thirdPartyReq } from "./src/thirdParty/ThirdPartyReq.js";
+import scorer from "./src/scorer/Scorer.js";
 
 
 const formDeleteCookie = document.getElementById('delete-cookie');
@@ -27,6 +27,9 @@ const thirdPartyMessage = document.getElementById('message-third-party');
 const formDisplayCrossSite = document.getElementById('display-cross-site');
 const crossSiteMessage = document.getElementById('message-cross-site');
 
+const formDisplayScore = document.getElementById('display-score');
+const scoreMessage = document.getElementById('message-score');
+
 
 
 
@@ -35,8 +38,11 @@ const sectionCookies = document.getElementById('cookies');
 const sectionStorage = document.getElementById('storage');
 const sectionThirdParty = document.getElementById('third-party');
 const sectionCrossSite = document.getElementById('cross-site');
+const sectionScore = document.getElementById('score');
 
 //hide storage section
+sectionScore.hidden = false;
+sectionCookies.hidden = true;
 sectionStorage.hidden = true;
 sectionThirdParty.hidden = true;
 sectionCrossSite.hidden = true;
@@ -44,8 +50,19 @@ sectionCrossSite.hidden = true;
 //get dropdown menu li
 const dropdownMenu = document.querySelectorAll("#dm li");
 
+const scoreButton = document.getElementById('score-button');
+
+scoreButton.addEventListener('click', () => {
+  sectionScore.hidden = false;
+  sectionCookies.hidden = true;
+  sectionStorage.hidden = true;
+  sectionThirdParty.hidden = true;
+  sectionCrossSite.hidden = true;
+});
+
 
 dropdownMenu[0].addEventListener('click', () => {
+  sectionScore.hidden = true;
   sectionCookies.hidden = false;
   sectionStorage.hidden = true;
   sectionThirdParty.hidden = true;
@@ -53,6 +70,7 @@ dropdownMenu[0].addEventListener('click', () => {
 });
 
 dropdownMenu[1].addEventListener('click', () => {
+  sectionScore.hidden = true;
   sectionCookies.hidden = true;
   sectionStorage.hidden = false;
   sectionThirdParty.hidden = true;
@@ -60,6 +78,7 @@ dropdownMenu[1].addEventListener('click', () => {
 });
 
 dropdownMenu[2].addEventListener('click', () => {
+  sectionScore.hidden = true;
   sectionCookies.hidden = true;
   sectionStorage.hidden = true;
   sectionThirdParty.hidden = false;
@@ -68,11 +87,48 @@ dropdownMenu[2].addEventListener('click', () => {
 
 
 dropdownMenu[3].addEventListener('click', () => {
+  sectionScore.hidden = true;
   sectionCookies.hidden = true;
   sectionStorage.hidden = true;
   sectionThirdParty.hidden = true;
   sectionCrossSite.hidden = false;
 });
+
+function updateScore() {
+  const weights = {
+    "cookie": 0.5,
+    "storage": 1,
+    "third-party": 0.5,
+    "cross-site": 2
+  }
+  
+  let elements = {
+    "cookie": 0,
+    "storage": 0,
+    "third-party": 0,
+    "cross-site": 0
+  }
+  chrome.runtime.sendMessage({cmd: "display-req"}).then((response) => { 
+    elements["third-party"] = response.len;
+  });
+
+  chrome.runtime.sendMessage({cmd: "display-cross"}).then((response) => {
+    elements["cross-site"] = response.len;
+  });
+
+  elements["cookie"] = cookiesHandler.data.length;
+  elements["storage"] =  Object.keys(storageHandler.data['local']).length +  Object.keys(storageHandler.data['session']).length
+
+  scorer.elements = elements;
+  scorer.weigths = weights;
+
+  console.log(scorer.elements);
+  console.log(scorer.weigths);
+
+  return scorer.calculateScore();
+}
+
+
 
 // The async IIFE is necessary because Chrome <89 does not support top level await.
 (async function initPopupWindow() {
@@ -93,15 +149,9 @@ dropdownMenu[3].addEventListener('click', () => {
   await storageHandler.get();
   storageHandler.handleDisplay();
   // chrome.runtime.sendMessage({cmd: "setMsg", message: [1, 2]});
-
-
-
-
-  // setMessage([thirdPartyMessage, crossSiteMessage]);
-
-  // thirdPartyReq.init(domain);
-  // thirdPartyReq.setMessage([thirdPartyMessage, crossSiteMessage]);
-  //await chrome.extension.getBackgroundPage().console.log('fooooooobarrrrr');
+  let score = updateScore();
+  scoreMessage.textContent = score;
+  scoreMessage.hidden = false;
 })();
 
 // chrome.webRequest.onBeforeSendHeaders.addListener(
@@ -118,6 +168,13 @@ dropdownMenu[3].addEventListener('click', () => {
 //   },
 //   {urls: ["<all_urls>"]}
 // );
+
+formDisplayScore.addEventListener('submit', (event) => {
+  event.preventDefault();
+  let score = updateScore();
+  scoreMessage.textContent = score;
+  scoreMessage.hidden = false;
+});
 
 formDeleteCookie.addEventListener('submit', async (event) =>{ 
   event.preventDefault();

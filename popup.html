@@ -75,8 +75,8 @@
 	<body>
 	
 		<nav class="navbar navbar-default" role="navigation">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#">Brand</a>
+			<div class="navbar-header" id="score-button">
+				<a class="navbar-brand" href="#">Score</a>
 			</div>
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav">
@@ -158,8 +158,10 @@
         <div id="score" class="sep">
           <div  class="flex-column-mw">
             <div id="rating-txt" class="message">web site rating:</div>
-            <div id="rating" class="message">0</div>
             <span id="message-score" class="message"></span>
+            <form id="display-score">
+              <button class="sub-btn" id="go">Update Score</button>
+            </form>
           </div>
       </div>
 		</section>

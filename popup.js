@@ -29,6 +29,7 @@ const crossSiteMessage = document.getElementById('message-cross-site');
 
 const formDisplayScore = document.getElementById('display-score');
 const scoreMessage = document.getElementById('message-score');
+const scoreClass = document.getElementById('score-class');
 
 
 
@@ -122,10 +123,18 @@ function updateScore() {
   scorer.elements = elements;
   scorer.weigths = weights;
 
-  console.log(scorer.elements);
-  console.log(scorer.weigths);
-
   return scorer.calculateScore();
+}
+
+function classifyScore(score) {
+  if(score > 30) {
+    return "Severe";
+  } else if(score > 20) {
+    return "Moderate";
+  }
+  else {
+    return "Good";
+  }
 }
 
 
@@ -152,6 +161,10 @@ function updateScore() {
   let score = updateScore();
   scoreMessage.textContent = score;
   scoreMessage.hidden = false;
+
+  scoreClass.textContent = classifyScore(score);
+  scoreClass.hidden = false;
+
 })();
 
 // chrome.webRequest.onBeforeSendHeaders.addListener(
@@ -172,6 +185,8 @@ function updateScore() {
 formDisplayScore.addEventListener('submit', (event) => {
   event.preventDefault();
   let score = updateScore();
+  scoreClass.textContent = classifyScore(score);
+  scoreClass.hidden = false;
   scoreMessage.textContent = score;
   scoreMessage.hidden = false;
 });
